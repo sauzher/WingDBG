@@ -1,0 +1,156 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<h3>Configure Wing Debugger</h3>
+
+<form action="manage_configure" method="POST"
+      tal:attributes="action string:${here/absolute_url}/manage_configure;">
+
+<fieldset>
+<legend>General settings</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="wing_home" class="form-label">Wing home dir</label>
+  </td><td>
+    <input class="form-element" type="text" name="wing_home"
+           id="wing_home" value="" size="30"
+           tal:attributes="value here/wing_home;" />
+    <div class="system-msg" style="color: red"
+         tal:condition="not:here/wingHomeExists">
+        This is not a valid directory. Please verify the path.
+    </div>
+    <div class="system-msg" style="color: red"
+         tal:condition="python:here.wingHomeExists() and
+                               not here.wingHomeIsValid()">
+        This is not a valid Wing installation. Please verify the path.
+    </div>
+    <div class="form-help">
+      The directory where Wing IDE is installed on this machine.  This is
+      used to find Wing IDE's debugger support modules.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top">
+    <label for="log_file" class="form-label">Log file</label>
+  </td><td tal:define="log here/log_file">
+    <select class="form-element" name="log_file" id="log_file"
+            onchange="if (this.options[this.selectedIndex].value == '<file>') {
+                          getElementById('log_file_path').disabled = false;
+                          getElementById('log_file_path').focus();
+                      } else { getElementById('log_file_path').disabled = true; }">
+      <option value=""
+              tal:attributes="selected python:not log">
+        No logging
+      </option>
+      <option value="<zopelog>"
+              tal:attributes="selected python:log == '<zopelog>'">
+        To the Zope eventlog
+      </option>
+      <option value="<stdout>"
+              tal:attributes="selected python:log == '<stdout>'">
+        To sys.stdout
+      </option>
+      <option value="<stderr>"
+              tal:attributes="selected python:log == '<stderr>'">
+        To sys.stderr
+      </option>
+      <option value="<file>"
+              tal:attributes="selected python:log and not (log[0], log[-1]) == ('<', '>')">
+        The following file
+      </option>
+    </select>
+    <input class="form-element" type="text" name="log_file_path" value=""
+           id="log_file_path" size="30"
+           tal:define="disabled python:not log or (log[0], log[-1]) == ('<', '>');"
+           tal:attributes="disabled disabled;
+                           value python:test(disabled, '', log);" />
+    <div class="form-help">
+      Where to send the debugger log; disabled, zope eventlog, stdout, stderr
+      or a file. When using the Zope eventlog, the INFO level is used.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend>Wing IDE connection settings</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="ide_host" class="form-label">IDE host</label>
+  </td><td>
+    <input class="form-element" type="text" name="ide_host"
+           id="ide_host" value="" size="30"
+           tal:attributes="value here/ide_host;" />
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="ide_port" class="form-label">IDE port</label>
+  </td><td>
+    <input class="form-element" type="text" name="ide_port:int"
+           id="ide_port" value="" size="5"
+           tal:attributes="value here/ide_port;" />
+    <div class="form-help">
+      The host and port indicate where Wing IDE is listening for the
+      debug connection.  By default Wing IDE listens on port 50005
+      for connections from localhost.  To alter this, use the
+      Debugger External/Remote preferences in the IDE and set
+      corresponding values here.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend>Debug http request server settings</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="http_host" class="form-label">HTTP host</label>
+  </td><td>
+    <input class="form-element" type="text" name="http_host"
+           id="http_host" value="" size="30"
+           tal:attributes="value here/http_host;" />
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="http_port" class="form-label">HTTP port</label>
+  </td><td>
+    <input class="form-element" type="text" name="http_port:int"
+           id="http_port" value="" size="5"
+           tal:attributes="value here/http_port;" />
+    <div class="form-help">
+      The host and port indicate where the debugger will listen for
+      http requests from your browser.  Only requests made to the
+      configured port will be run within the debugger.  Using the
+      defaults of 'localhost' and 50080, you would connect to
+      <a href="http://localhost:50080">http://localhost:50080/</a>
+      from your browser once the debugger has been started.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td style="width: 10em;">&nbsp;</td>
+  <td><input class="form-element" type="submit" value="Change"/></td>
+</tr>
+</table>
+</form>
+
+<hr />
+For usage details, see
+<a href="manage_document"
+   tal:attributes="href string:${here/absolute_url}/manage_document">Documentation</a>.
+<h1 tal:replace="structure here/manage_page_footer" />

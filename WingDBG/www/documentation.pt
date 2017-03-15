@@ -1,0 +1,19 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<style type="text/css"><!--
+a[name], a[name]:hover {
+  color: black;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 12pt;
+}
+--></style>
+
+<h3>Documentation</h3>
+
+<div tal:replace="structure here/manage_readDocumentation">Documentation</div>
+
+<h1 tal:replace="structure here/manage_page_footer" />

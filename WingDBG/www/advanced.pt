@@ -1,0 +1,175 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<h3>Advanced Configuration Wing Debugger</h3>
+
+<form action="manage_advanced" method="POST"
+      tal:attributes="action string:${here/absolute_url}/manage_configure;"
+      tal:define="
+PW_MODE_PROFILE_DIR modules/WingDBG.config/PW_MODE_PROFILE_DIR;
+PW_MODE_CUSTOM_DIR modules/WingDBG.config/PW_MODE_CUSTOM_DIR;
+PW_MODE_CUSTOM_PW modules/WingDBG.config/PW_MODE_CUSTOM_PW;
+PW_ENC_TYPE_NONE modules/WingDBG.config/PW_ENC_TYPE_NONE;
+PW_ENC_TYPE_ROTOR modules/WingDBG.config/PW_ENC_TYPE_ROTOR;
+">
+
+<fieldset>
+<legend>Python Script Debugging</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="script_support" class="form-label">Enable Script Debugging</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="script_support:bool"
+           id="script_support"
+           tal:attributes="checked here/script_support;" />
+    <input type="hidden" name="script_support:bool:default" value="" />
+    <div class="form-help">
+      Apply a hot patch to Zope so that Python Scripts stored on the
+      file system can be debugged.  The patch is applied at runtime only
+      after the debugger is started.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend>Wing IDE Debugger Automation</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="auto_start" class="form-label">Auto start</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="auto_start:bool"
+           id="auto_start"
+           tal:attributes="checked here/auto_start;" />
+    <input type="hidden" name="auto_start:bool:default" value="" />
+    <div class="form-help">
+      Start the debugger when Zope starts.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="connect_at_start" class="form-label">Auto connect</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="connect_at_start:bool"
+           id="connect_at_start"
+           tal:attributes="checked here/connect_at_start;" />
+    <input type="hidden" name="connect_at_start:bool:default" value="" />
+    <div class="form-help">
+      Connect to IDE when debugger is started.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="auto_reconnect_ide" class="form-label">Auto re-connect</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="auto_reconnect_ide:bool"
+           id="auto_reconnect_ide"
+           tal:attributes="checked here/auto_reconnect_ide;" />
+    <input type="hidden" name="auto_reconnect_ide:bool:default" value="" />
+    <div class="form-help">
+      Try to reconnect to IDE when the debug server is handling a request but
+      the IDE is not connected. The reconnect is attempted on every request,
+      so use with caution.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend>Remote IDE attach</legend>
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left" valign="top" style="width: 10em;">
+    <label for="allow_attach" class="form-label">Allow Remote IDE Attach</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="allow_attach:bool"
+           id="allow_attach"
+           tal:attributes="checked here/allow_attach;" />
+    <input type="hidden" name="allow_attach:bool:default" value="" />
+    <div class="form-help">
+      The connection to the IDE can also be initiated from the IDE side itself;
+      this option enables listening on the port configured below for remote
+      requests to attach.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top">
+    <label for="pw_mode" class="form-label">Password source</label>
+  </td><td>
+    <div class="form-element" tal:condition="here/getProfileDir">
+      <input class="form-element" type="radio" name="pw_mode:int"
+             id="pw_mode" value="0"
+             tal:attributes="value PW_MODE_PROFILE_DIR;
+                             checked python:here.pw_mode == PW_MODE_PROFILE_DIR;" />
+        From wingdebugpw in User Settings Directory (<span
+          tal:replace="here/getProfileDir">$USERWINGDIR</span>)
+    </div>
+    <div class="form-element">
+      <input class="form-element" type="radio" name="pw_mode:int"
+             id="pw_mode" value="1"
+             onchange="getElementById('pw_dir').focus()"
+             tal:attributes="value PW_MODE_CUSTOM_DIR;
+                             checked python:here.pw_mode == PW_MODE_CUSTOM_DIR;" />
+        From wingdebugpw in
+        <input type="text" class="form-element" name="pw_dir" value=""
+               id="pw_dir" size="20" style="width: 18em;"
+               tal:attributes="value here/pw_dir;" />
+    </div>
+    <div class="form-element">
+      <input class="form-element" type="radio" name="pw_mode:int"
+             id="pw_mode" value="2"
+             onchange="getElementById('custom_connect_pw').focus()"
+             tal:attributes="value PW_MODE_CUSTOM_PW;
+                             checked python:here.pw_mode == PW_MODE_CUSTOM_PW;" />
+        Use
+        <input type="text" class="form-element" name="custom_connect_pw"
+               value="" id="custom_connect_pw" size="10"
+               tal:attributes="value here/custom_connect_pw;"/>
+        as connection password.
+    </div>
+    <div class="form-help">
+      The port to listen to for attach requests initiated from Wing IDE.
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td align="left" valign="top">
+    <label for="attach_port" class="form-label">Attach port</label>
+  </td><td>
+    <input class="form-element" type="text" name="attach_port:int"
+           id="attach_port" value="" size="5"
+           tal:attributes="value here/attach_port;"/>
+    <div class="form-help">
+      The port to listen to for attach requests initiated from Wing IDE.
+    </div>
+  </td>
+</tr>
+</table>
+</fieldset>
+
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td style="width: 10em;">&nbsp;</td>
+  <td><input class="form-element" type="submit" value="Change"/></td>
+</tr>
+</table>
+
+<input type="hidden" name="advanced:boolean" value="1" />
+</form>
+
+<hr />
+For usage details, see
+<a href="manage_document"
+   tal:attributes="href string:${here/absolute_url}/manage_document">Documentation</a>.
+<h1 tal:replace="structure here/manage_page_footer" />

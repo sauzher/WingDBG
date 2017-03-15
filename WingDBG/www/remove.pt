@@ -1,0 +1,37 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<h3>Remove Wing Debug Service</h3>
+
+<p class="form-help">
+  If you need to remove the Wing Debug Service from the Control Panel (for 
+  example because you want to migrate the database to a production machine) you
+  can do so here. Just check the 'Are you sure?' box, and click on 'Remove'.
+  <em>Note:</em> The service will automatically be recreated the next time you 
+  start Zope unless you remove the WingDBG Product from your Products directory.
+</p>
+
+<form action="manage_remove" method="POST"
+      tal:attributes="action string:${here/absolute_url}/manage_remove;">
+
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td align="left">
+    <label for="sure" class="form-label">Are you sure?</label>
+  </td><td>
+    <input class="form-element" type="checkbox" name="sure:boolean" 
+           id="sure" /> Yes
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td><input class="form-element" type="submit" value="Remove" /></td>
+</tr>
+</table>
+</form>
+
+<hr />
+For usage details, see 
+<a href="manage_document" 
+   tal:attributes="href string:${here/absolute_url}/manage_document">Documentation</a>.
+<h1 tal:replace="structure here/manage_page_footer" />

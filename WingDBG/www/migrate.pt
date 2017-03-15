@@ -1,0 +1,145 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<h3>Wing Debugger Settings Migration</h3>
+
+<form action="manage_migrate" method="POST"
+      tal:attributes="action string:${here/absolute_url}/manage_migrate;"
+      tal:define="
+secManager modules/AccessControl/getSecurityManager;
+perm modules/WingDBG.config/CHANGE_PERMISSION;
+cp_id modules/WingDBG.config/CONTROL_PANEL_ID;
+fields here/getChangedFields;
+conf_changes python:[fields[f] for (f, a, g) in here.fields if g == 0 and fields[f]];
+adv_changes python:[fields[f] for (f, a, g) in here.fields if g == 1 and fields[f]];
+changes python:conf_changes or adv_changes;">
+
+<p class="form-help">
+  The WingDBG Product has moved to a service model, with a central 
+  <a href="/Control_Panel/WingDebugService/manage_main" 
+     tal:attributes="href 
+          string:${request/BASE0}/Control_Panel/$cp_id/manage_main"
+     >Wing Debug Service</a> in the 
+  <a href="/Control_Panel/manage_main"
+     tal:attributes="href string:${request/BASE0}/Control_Panel/manage_main"
+     >Zope Control Panel</a>. 
+  You can preserve your settings by migrating them to the new Service object 
+  with this form, after which it will be safe to remove this placeholder 
+  object.
+</p>
+
+<p tal:condition="not:changes">
+  There are no configuration values to migrate, you can safely delete this
+  object.
+</p>
+
+<div tal:condition="changes"
+     tal:define="service here/Control_Panel/?cp_id|nothing;
+                 access python:service and 
+                               secManager.checkPermission(perm, service) and 
+                               secManager.checkPermission(perm, here)">
+<div tal:condition="not:access" class="system-msg">
+You don't have the requisite permissions to migrate the configuration 
+differences from this object to the Wing Debug Service. The permission names
+have changed to, make sure you have the <strong tal:content="perm">permission 
+name</strong> permission; both for this object and for the service. The old 
+permission was called <em>Change Wing Debuggers</em>.
+</div>
+
+<div tal:condition="access">
+<p>Check all values you want to migrate and click on the 'Migrate' button to copy
+over the configuration values to the Wing Debug Service.</p>
+
+<fieldset tal:condition="conf_changes">
+<legend>Configuration</legend>
+<table cellspacing="5" cellpadding="2" border="0">
+<thead>
+ <tr><th></th>
+   <th style="width: 12em;">Field</th>
+   <th style="width: 15em;">Local</th>
+   <th style="width: 15em;">Service</th></tr>
+</thead>
+
+<tal:block repeat="fi here/fields">
+<tr valign="top"
+    tal:define="field python:fi[0];
+                label python:fi[1];
+                cat python:fi[2];"
+    tal:condition="python: cat == 0 and fields[field]">
+  <td><input type="checkbox" name="fields:list" id="wing_home"
+             value="wing_home" 
+             tal:attributes="value field; id field;" /></td>
+  <td><label for="wing_home"
+             tal:attributes="for field"
+             tal:content="label">Wing Home</label></td>
+  <td class="row-hilite" 
+      tal:define="value python:here.getLocalValue(field)"
+      tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
+  <td class="row-hilite" 
+      tal:define="value python:here.getServiceValue(field)"
+      tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
+</tr>
+</tal:block>
+</table>
+</fieldset>
+
+<fieldset tal:condition="adv_changes">
+<legend>Advanced Configuration</legend>
+<table cellspacing="5" cellpadding="2" border="0">
+<thead>
+ <tr><th></th>
+   <th style="width: 12em;">Field</th>
+   <th style="width: 15em;">Local</th>
+   <th style="width: 15em;">Service</th></tr>
+</thead>
+
+<tal:block repeat="fi here/fields">
+<tr valign="top"
+    tal:define="field python:fi[0];
+                label python:fi[1];
+                cat python:fi[2];"
+    tal:condition="python: cat == 1 and fields[field]">
+  <td><input type="checkbox" name="fields:list" id="wing_home"
+             value="wing_home" class="form-element"
+             tal:attributes="value field; id field;" /></td>
+  <td><label for="wing_home"
+             tal:attributes="for field"
+             tal:content="label">Wing Home</label></td>
+  <td class="row-hilite" 
+      tal:define="value python:here.getLocalValue(field)"
+      tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
+  <td class="row-hilite" 
+      tal:define="value python:here.getServiceValue(field)"
+      tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
+</tr>
+</tal:block>
+</table>
+</fieldset>
+
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td style="width: 17em;">&nbsp;</td>
+  <td><input class="form-element" type="submit" value="Migrate" /></td>
+</tr>
+</table>
+
+</div>
+</div>
+</form>
+
+<form action="../manage_delObjects" method="POST"
+      tal:attributes="action string:${here/aq_parent/absolute_url}/manage_delObjects;"
+      tal:define="secManager modules/AccessControl/getSecurityManager;
+                  perm modules/WingDBG.config/DEL_PERMISSION;"
+      tal:condition="python:secManager.checkPermission(perm, here.aq_parent)">
+<input type="hidden" name="ids:list" value="id"
+       tal:attributes="value here/getId" />
+<table cellspacing="0" cellpadding="2" border="0">
+<tr>
+  <td style="width: 17em;">&nbsp;</td>
+  <td><input class="form-element" type="submit" value="Delete this object" /></td>
+</tr>
+</table>
+</form>
+
+<h1 tal:replace="structure here/manage_page_footer" />

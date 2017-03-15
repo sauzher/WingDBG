@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="Docutils 0.8.1: http://docutils.sourceforge.net/" />
+<title></title>
+<link rel="stylesheet" href="qrc:default.css" type="text/css" />
+</head>
+<body>
+<div class="document">
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong>&quot;The best solution for debugging Zope and Plone&quot;</strong>
+<em>-- Joel Burton, Member, Plone Team</em></p>
+</div>
+<img alt="Wing IDE Screen Shot" src="/images/screenshots/wing5-screenshot-linen.png" style="width: 560px; height: 419px;" />
+<p><a class="reference external" href="http://wingware.com/wingide">Wing IDE</a> is an integrated development environment that can be used to
+develop, test, and debug Python code running under Zope2 or Zope3. Wing
+provides auto-completion, call tips, and other features that help you write,
+navigate, and understand Zope code. Wing's debugger can be used to debug code
+in the context of the running Zope server, in response to page loads from a
+browser, and can work with Zope's code reloading features to achieve a very
+short edit/debug cycle.</p>
+<p>Wing's code intelligence and debugging support work with Products, External
+Methods, file system-based Scripts and Zope itself. Wing IDE is also useful
+for Zope-based frameworks like <a class="reference external" href="http://www.plone.org/">Plone</a> (see <a class="reference external" href="http://wingware.com/doc/howtos/plone">Plone Quickstart</a>).</p>
+<p>For more information on Wing IDE see the <a class="reference external" href="http://wingware.com/products">product overview</a>. If you do not already have Wing IDE
+installed, <a class="reference external" href="http://wingware.com/wingide/trial">download a free trial now</a>.</p>
+<p>To get started using Wing, refer to the tutorial in the <tt class="docutils literal">Help</tt> menu in Wing
+and/or the <a class="reference external" href="http://wingware.com/doc/howtos/quickstart">Wing IDE Quickstart Guide</a>.</p>
+<div class="section" id="before-getting-started">
+<h1>Before Getting Started</h1>
+<p><strong>Note:</strong> This guide is for Zope2 users.  If you are using Zope3, please
+try <a class="reference external" href="http://www.zopatista.com/projects/z3wingdbg">z3wingdbg</a> by Martijn Pieters or refer to <a class="reference external" href="http://wingware.com/doc/debug/debugging-externally-launched-code">Debugging Externally
+Launched Code</a> in the users manual to set up Zope3 debugging manually.</p>
+<p><strong>Limitations:</strong> Wing IDE cannot debug DTML, Page Templates, ZCML,
+or Python code that is not stored on the file system.</p>
+<p><strong>Security Warning:</strong> We advise against using the WingDBG product
+on production web servers.  Any user connected to the Wing IDE debugger
+will (unavoidably) have extensive access to files and data on the system.</p>
+</div>
+<div class="section" id="upgrading-from-earlier-wing-versions">
+<h1>Upgrading from earlier Wing versions</h1>
+<p>If you are upgrading from an older version of Wing and have previously used
+Wing with your Zope installation(s), you need to manually upgrade <tt class="docutils literal">WingDBG</tt>
+in each Zope instance.  Otherwise, debugging may fail.</p>
+<p>The easiest way to do this is to go to the Zope Control Panel, click on <tt class="docutils literal">Wing
+Debug Service</tt>, and then <tt class="docutils literal">Remove</tt> the control panel.  Then restart Zope.  Next,
+go into your Wing project's <tt class="docutils literal">Extension Tab</tt>, verify that you've got the
+<tt class="docutils literal">Zope Instance Home</tt> set correctly, and press <tt class="docutils literal">Apply</tt>. This will offer to
+re-install <tt class="docutils literal">WingDBG</tt> with the latest version and will configure it to point
+to the new version of Wing.</p>
+</div>
+<div class="section" id="quick-start-on-a-single-host">
+<h1>Quick Start on a Single Host</h1>
+<p>To use Wing IDE with Zope running on the same host as the IDE:</p>
+<ul class="simple">
+<li><strong>Install Zope</strong> -- You can obtain Zope from <a class="reference external" href="http://www.zope.org">zope.org</a>.  Version
+2.5.1 or newer will work with Wing.</li>
+<li><strong>Install Wing IDE</strong> -- You will need <a class="reference external" href="http://wingware.com/downloads">Wing IDE</a> 2.1 or later.
+See <a class="reference external" href="http://wingware.com/doc/install/installing">Installing</a> for details.</li>
+<li><strong>Configure Wing IDE</strong> -- Start Wing, create or open the project you
+wish to use (from the <tt class="docutils literal">Project</tt> menu). Then use the <tt class="docutils literal">Extensions</tt>
+tab in <tt class="docutils literal">Project Properties</tt> to enable <tt class="literal"><span class="pre">Zope2/Plone support</span></tt> and to
+specify the <tt class="literal"><span class="pre">Zope2 Instance Home</span></tt> to use with the project.  Wing
+will find your Zope installation by reading the file <tt class="docutils literal">etc/zope.conf</tt>
+in the provided Zope instance.  Once you press <tt class="docutils literal">Apply</tt> or <tt class="docutils literal">OK</tt> in the Project
+Properties dialog, Wing will ask to install the WingDBG product and will
+offer to add files from your Zope installation to the project.
+If your zope instance is generated by buildout, set the main debug file to
+the <tt class="docutils literal">bin/instance</tt> file (<tt class="docutils literal"><span class="pre">bin\instance-script.py</span></tt> on Windows) in your
+buildout tree by opening the file in Wing and select <tt class="docutils literal">Set Current as Main
+Debug File</tt> in the <tt class="docutils literal">Debug</tt> menu. This will set up the effective sys.path
+for the instance.</li>
+<li><strong>Configure the WingDBG Product</strong> -- Start or restart Zope and
+log into <a class="reference external" href="http://localhost:8080/manage">http://localhost:8080/manage</a> (assuming default Zope
+configuration).  The Wing Debugging Service will be created automatically
+on startup; you can find it under the Control Panel of your server.
+If the Wing Debugging Service does not appear in the Control Panel,
+you may need to enable product loading in your zope.conf file by
+changing <tt class="docutils literal"><span class="pre">enable-product-installation</span> off</tt> to
+<tt class="docutils literal"><span class="pre">enable-product-installation</span> on</tt>.</li>
+</ul>
+</div>
+<div class="section" id="starting-the-debugger">
+<h1>Starting the Debugger</h1>
+<p>Proceed to the Wing Debugger Service by navigating to the Control Panel, then
+selecting the 'Wing Debugging Service'. Click in the &quot;Start&quot; button. The Wing
+IDE status area should display &quot;Debugger: Debug process running&quot;.</p>
+<p>Note that you can configure WingDBG to start and connect to the IDE automatically
+when Zope is started from the Advanced configuration tab.</p>
+<p><strong>Problems?</strong>  See the Trouble-Shooting Guide below.</p>
+</div>
+<div class="section" id="test-drive-wing-ide">
+<h1>Test Drive Wing IDE</h1>
+<p>Once you've started the debugger successfully, here are some things
+to try:</p>
+<p><strong>Run to a Breakpoint</strong> -- Open up your Zope code in Wing IDE and set
+a breakpoint on a line that will be reached as the result of a browser
+page load. Then load that page in your web browser using the port number
+displayed by the Zope Management Interface after you started the
+debugger. By default, this is 50080, so your URL would look something
+like this:</p>
+<pre class="literal-block">
+http://localhost:50080/Rest/Of/Usual/Url
+</pre>
+<p><strong>Explore the Debugger Tools</strong> -- Take a look at these tools available
+from the Tools menu:</p>
+<ul class="simple">
+<li><tt class="docutils literal">Stack Data</tt> -- displays the stack, allows selecting current stack frame,
+and shows the locals and globals for that frame.</li>
+<li><tt class="docutils literal">Debug Probe</tt> (Wing Pro only) -- lets you interact with your paused debug process using
+a Python shell prompt</li>
+<li><tt class="docutils literal">Watch</tt> (Wing Pro only) -- watches values selected from other value views (by right-clicking
+and selecting one of the <tt class="docutils literal">Watch</tt> items) and allows entering expressions
+to evaluate in the current stack frame</li>
+<li><tt class="docutils literal">Modules</tt> (Wing Pro only) -- browses data for all modules in <tt class="docutils literal">sys.modules</tt></li>
+<li><tt class="docutils literal">Exceptions</tt> -- displays exceptions that occur in the debug process</li>
+<li><tt class="docutils literal">Debug I/O</tt> -- displays debug process output and processes keyboard input
+to the debug process, if any</li>
+</ul>
+<p><strong>Continue the Page Load</strong> -- When done, select <tt class="docutils literal">Start / Continue</tt> from the
+<tt class="docutils literal">Debug</tt> menu or toolbar.</p>
+<p><strong>Try Pause</strong> -- From Wing, you can pause the Zope process by pressing
+the pause icon in the toolbar or using <tt class="docutils literal">Pause</tt> from the <tt class="docutils literal">Debug</tt> menu.  This is
+a good way to interrupt a lengthy computation to see what's going on.
+When done between page loads, it pauses Zope in its network service code.</p>
+<p><strong>Other Features</strong> -- Notice that Wing IDE's editor contains a source
+index and presents you with an auto-completer when you're editing
+source code.  Control-click on a source symbol to jump to its
+point of definition (or use Goto Selected Symbol in the Source menu).
+Wing Pro also includes a Source Assistant and Source Browser.  The
+Source Assistant will display context appropriate call tips and documentation.
+Bring up the <tt class="docutils literal">Source Browser</tt> from the Tools menu to look at the
+module and class structure of your code.</p>
+</div>
+<div class="section" id="setting-up-auto-refresh">
+<h1>Setting Up Auto-Refresh</h1>
+<p>When you edit and save Zope External Methods or Scripts, your changes
+will automatically be loaded into Zope with each new browser page load.</p>
+<p>By default, Zope Products are not automatically reloaded, but it is
+possible to configure them to do so.  This can make debugging much
+faster and easier.</p>
+<p>Take the following steps to take advantage of this feature:</p>
+<ul class="simple">
+<li>Place a file called <tt class="docutils literal">refresh.txt</tt> in your Product's source directory
+(for example, <tt class="docutils literal">Products/MyProductName</tt> inside your Zope
+installation).  This file tells Zope to allow refresh for this product.</li>
+<li>Open the Zope Management Interface.</li>
+<li>Expand the Control Panel and Products tabs on the upper left.</li>
+<li>Click on your product.</li>
+<li>Select the Refresh tab.</li>
+<li>Check the &quot;Auto refresh mode&quot; check box and press &quot;Change&quot;.</li>
+<li>Make an edit to your product source, and you should see
+the changes you made take effect in the next browser page load.</li>
+</ul>
+<p><strong>Limitations</strong>: Zope may not refresh code if you use <tt class="docutils literal">import</tt> statements
+within functions or methods. Also, code that manages to retain references to
+old code objects after a refresh (for example, by holding the references in a
+C/C++ extension module) will not perform as expected.</p>
+<p>If you do run into a case where auto-reload causes problems, you will
+need to restart Zope from the Zope Management Interface's Control Panel
+or from the command line. Note that pressing the Stop button in Wing
+only disconnects from the debug process and does not terminate Zope.</p>
+</div>
+<div class="section" id="alternative-approach-to-reloading">
+<h1>Alternative Approach to Reloading</h1>
+<p>The <tt class="docutils literal">refresh.txt</tt> techique for module reloading is discouraged in the Plone
+community. Another option for reloading both Zope and Plone filesystem-based
+code is <tt class="docutils literal">plone.reload</tt> available from pypi at <a class="reference external" href="http://pypi.python.org/pypi/plone.reload">http://pypi.python.org/pypi/plone.reload</a>. <tt class="docutils literal">plone.reload</tt> will allow you
+to reload Python code that has been changed since the last reload, and also
+give you the option to reload any <tt class="docutils literal">zcml</tt> configuration changes.</p>
+<p>If you are using <tt class="docutils literal">buildout</tt>, add <tt class="docutils literal">plone.reload</tt> to the eggs and zcml
+sections of your <tt class="docutils literal">buildout.cfg</tt> and re-run buildout.</p>
+<p>To use <tt class="docutils literal">plone.reload</tt>, assuming Zope is running on your local machine at
+port 8080, log into the ZMI as a Manager user, then go to
+<a class="reference external" href="http://localhost:8080/&#64;&#64;reload">http://localhost:8080/&#64;&#64;reload</a> on your
+Zope instance with a web browser (append <tt class="docutils literal">&#64;&#64;reload</tt> to the Zope instance
+root, not your Plone site if you are using Plone).</p>
+<p>Notes:</p>
+<ul class="simple">
+<li>If you are using Plone, your Plone product's profile config files (*.xml files)
+get loaded through the ZMI at <tt class="docutils literal">/YourPlone/portal_setup</tt> in the <tt class="docutils literal">import</tt> tab.</li>
+<li>Code that uses a <tt class="docutils literal">&#64;decorator</tt> will still likely require a restart.</li>
+</ul>
+</div>
+<div class="section" id="setting-up-remote-debugging">
+<h1>Setting up Remote Debugging</h1>
+<p>Configuring Wing for remote debugging can be complicated, so we
+recommend using X11 (Linux/Unix) or Remote Desktop (Windows)
+to run Wing IDE on the same machine as Zope but display it remotely.
+When this is not possible, you can set up Wing to debug Zope running
+on another machine, as described below:</p>
+<ul class="simple">
+<li><strong>Set up File Sharing</strong> -- You will need some mechanism for
+sharing files between the Zope host and the Wing IDE host. Windows file
+sharing, Samba, NFS, and ftp or rsync mirroring are all options.
+For secure file sharing via SSH on Linux, try <a class="reference external" href="http://fuse.sourceforge.net/sshfs.html">sshfs</a>.</li>
+<li><strong>Install Wing on the Server</strong> -- You will also need to install Wing on
+the host where Zope is running, if it is not already there.  No
+license is needed for this installation, unless you plan to also
+run the IDE there. If there is no binary distribution of Wing available for the
+operating system where Zope is running, you can instead install only
+the debugger libraries by building them from source code (contact Wingware
+for details).</li>
+<li><strong>Basic Configuration</strong> -- Follow the instructions for Single-Host
+Debugging above first if you have not already done so. Then return here
+for additional setup instructions.</li>
+<li><strong>Configure Allowed Hosts</strong> -- You will need to add the IP address of
+the Zope host to the  <tt class="literal"><span class="pre">Allowed Hosts</span></tt> preference in Wing.  Otherwise
+Wing will not accept your debug connections.</li>
+<li><strong>Configure File Mapping</strong> -- Next, set up a mapping between the location
+of the Zope installation on your Zope host and the point where it is
+accessible on you Wing IDE host. For example, if your Zope host is <tt class="docutils literal">192.168.1.1</tt> Zope is installed in
+<tt class="docutils literal">/home/myuser/Zope</tt> on that machine, and <tt class="docutils literal">/home/myuser</tt> is mounted on your
+Wing IDE host as <tt class="docutils literal">e:</tt>, you would add a <tt class="literal"><span class="pre">Location Map</span></tt> preference setting
+that maps <tt class="docutils literal">192.168.1.1</tt> to a list containing <tt class="docutils literal">/home/myuser/Zope</tt> and <tt class="docutils literal"><span class="pre">e:/Zope</span></tt>.
+For more information on this, see <a class="reference external" href="http://wingware.com/doc/debug/file-location-maps">File Location Maps</a> and <a class="reference external" href="http://wingware.com/doc/debug/file-location-map-example">Location Map Examples</a>
+in the Wing IDE manual.</li>
+<li><strong>Set the Zope Host</strong> -- Go into Project Properties and set the Zope Host
+to match the host name used in configuring the File Location Map in the previous
+step.  This is used to identify which host mapping should be applied to
+file names read from the <tt class="docutils literal">zope.conf</tt> file.</li>
+<li><strong>Modify WingDBG Configuration</strong> -- When debugging remotely, the value
+given to WingDBG for the Wing Home Directory must be the location
+where Wing is installed on the Zope host (the default value will
+usually need to be changed).</li>
+<li><strong>Check Project Configuration</strong> -- Similarly, the paths identified
+in Project Properties should be those on the host where Wing
+IDE is running, not the paths on the Zope host.</li>
+</ul>
+</div>
+<div class="section" id="trouble-shooting-guide">
+<h1>Trouble Shooting Guide</h1>
+<p>You can obtain additional verbose output from Wing IDE and the debug
+process as follows:</p>
+<ul class="simple">
+<li>If Zope or Plone on Windows is yielding a Site Error page with a notFoundError
+when run under Wing's debugger, you may need to go into the Zope Management
+Interface and delete the access rule (... accessRule.py ...).  Now, Zope/Plone runs
+on port 8080, does not alter the configuration of port 80, and will work properly
+with Wing's debug port (50080 by default).  If the URL for your front page
+is <a class="reference external" href="http://localhost:8080/default/front-page">http://localhost:8080/default/front-page</a>, the Wing IDE debug url will always
+be the same but with the different port: <a class="reference external" href="http://localhost:50080/default/front-page">http://localhost:50080/default/front-page</a>
+(Thanks for Joel Burton for this tip!)</li>
+<li>Go into the Wing Debugging Service in the Zope Management Interface and set <tt class="docutils literal">Log
+file</tt> under the <tt class="docutils literal">Configure</tt> tab. Using <tt class="docutils literal">&lt;stdout&gt;</tt> will cause
+logging information to be printed to the console from which Zope was
+started.  Alternatively, set this to the full path of a log file. This file must already
+exist for logging to occur.</li>
+<li>Restart Zope and Wing and try to initiate debug.</li>
+<li>Inspect the contents of the log. If you are running Zope and Wing IDE on two
+separate hosts, you should also inspect the <tt class="docutils literal">ide.log</tt> file on the Wing IDE
+host (located in the <a class="reference external" href="http://wingware.com/doc/install/user-settings-dir">User Settings Directory</a>). It contains additional
+logging information from the Wing IDE process.</li>
+</ul>
+<p>For additional help, send these errors logs to <a class="reference external" href="mailto:support&#64;wingware.com">support at wingware.com</a>.</p>
+</div>
+<div class="section" id="related-documents">
+<h1>Related Documents</h1>
+<p>Wing IDE provides many other options and tools.  For more information:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://wingware.com/doc/manual">Wing IDE Reference Manual</a>, which describes Wing IDE in detail.</li>
+<li><a class="reference external" href="http://www.zope.org">Zope home page</a>, which contains much additional information for Zope
+programmers.</li>
+<li><a class="reference external" href="http://wingware.com/doc/howtos/quickstart">Quick Start Guide</a> and <a class="reference external" href="http://wingware.com/doc/intro/tutorial">Tutorial</a> which contain additional
+basic information about getting started with Wing IDE.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

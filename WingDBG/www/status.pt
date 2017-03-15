@@ -1,0 +1,102 @@
+<h1 tal:replace="structure here/manage_page_header" />
+<h2 tal:replace="structure here/manage_tabs" />
+
+<tal:block tal:define="started here/hasStarted;
+                       connected here/isConnected;
+                       secManager modules/AccessControl/getSecurityManager;
+                       perm modules/WingDBG.config/USE_PERMISSION;
+                       access python:secManager.checkPermission(perm, here);">
+<h3>Wing Debugger</h3>
+
+<strong>Version <span tal:replace="here/version">version number</span></strong>
+
+<p><em>For security reasons, we recommend against using 
+the debugger on production web servers.  Any networked debugger, by
+design, opens up the server for probing and inspection.</em></p>
+
+<form method="POST" action="./" 
+      tal:attributes="action here/absolute_url">
+<h3>Status</h3>
+<table cellpadding="5" style="margin-left: 2em">
+  <tr class="row-hilite">
+    <td class="form-label">Debugger</td>
+    <td style="padding: 0 1em; width: 8em; font-weight: bold">
+      <span style="color: red"
+            tal:condition="not:started">Stopped</span>
+      <span style="color: green"
+            tal:condition="started">Started</span>
+    </td>
+    <td tal:condition="access">
+      <input type="submit" name="manage_start:method" value="Start"
+             style="width: 7em"
+             tal:attributes="value python:test(started, 'Stop', 'Start');
+                             name python:test(started, 'manage_stop:method',
+                                                       'manage_start:method')" />
+    </td>
+    <td rowspan="2" style="width: 25em"
+        tal:condition="not:access">
+      You don't have sufficient access to start or stop the debugger; make sure
+      you have the <strong tal:content="perm">permission name</strong> permission.
+    </td>
+  </tr>
+  <tr class="row-hilite">
+    <td class="form-label">IDE</td>
+    <td style="padding: 0 1em; font-weight: bold">
+      <span style="color: grey"
+            tal:condition="not:started">No debugger</span>
+      <span style="color: red"
+            tal:condition="python:started and not connected">Not connected</span>
+      <span style="color: green"
+            tal:condition="connected">Connected</span>
+    </td>
+    <td tal:condition="access">
+      <input type="submit" name="manage_connect:method" value="Connect"
+             style="width: 7em"
+             tal:attributes="disabled python:(not started) or connected" />
+    </td>
+  </tr>
+</table>
+</form>
+
+<p class="system-msg"
+   tal:condition="request/connection_timeout|nothing">
+  The debugger is still attempting to connect to the IDE.
+  This delay may be the result of processing that takes
+  place as debug is started (for example, if many modules
+  are already loaded in Python).  If the connection does not
+  establish on its own soon, you may be able to initiate it
+  manually with the "Connect" button above.
+</p>
+
+<div tal:condition="started">
+  <p>Any request made of http server at 
+  <a href="server_url" target="_new" 
+     tal:attributes="href here/serverUrl"
+     tal:content="here/serverUrl">server_url</a>
+  will be executed in the debugger.  This is a single threaded server so only
+  one request will be processed at a time.</p>
+
+  <p tal:condition="not:connected">
+    Since the debugger is not connected to Wing IDE, it will not stop at
+    any breakpoints or exceptions.  To connect to the IDE, click
+    on the Connect button above<span 
+      tal:condition="python:here.attach_port > -1">
+        or attach to the debugger from the IDE</span>.
+  </p>
+</div>
+<div tal:condition="not:started">
+  <p>Starting the debugger will start a new http server at 
+     <span tal:content="here/serverUrl">server_url</span>.</p>
+  <p>The debugger will attempt to connect to Wing IDE on host 
+     "<span tal:replace="here/ide_host">ide_host</span>", port 
+      <span tal:replace="here/ide_port">ide_port</span>.
+  </p>
+</div>
+
+</tal:block>
+
+<hr />
+For usage details, see 
+<a href="manage_document" 
+   tal:attributes="href string:${here/absolute_url}/manage_document">Documentation</a>.
+<h1 tal:replace="structure here/manage_page_footer" />
