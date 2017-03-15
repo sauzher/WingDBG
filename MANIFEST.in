@@ -1,0 +1,6 @@
+include LICENSE
+recursive-include WingDBG *.gif
+recursive-include WingDBG *.html
+recursive-include WingDBG *.pt
+recursive-include WingDBG *.winghome
+recursive-include WingDBG *.zcml
