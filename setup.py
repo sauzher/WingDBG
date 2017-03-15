@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '6.0rc1'
+version = '6.0rc2'
 
 setup(name='WingDBG',
       version=version,
