@@ -15,16 +15,16 @@ adv_changes python:[fields[f] for (f, a, g) in here.fields if g == 1 and fields[
 changes python:conf_changes or adv_changes;">
 
 <p class="form-help">
-  The WingDBG Product has moved to a service model, with a central 
-  <a href="/Control_Panel/WingDebugService/manage_main" 
-     tal:attributes="href 
+  The WingDBG Product has moved to a service model, with a central
+  <a href="/Control_Panel/WingDebugService/manage_main"
+     tal:attributes="href
           string:${request/BASE0}/Control_Panel/$cp_id/manage_main"
-     >Wing Debug Service</a> in the 
+     >Wing Debug Service</a> in the
   <a href="/Control_Panel/manage_main"
      tal:attributes="href string:${request/BASE0}/Control_Panel/manage_main"
-     >Zope Control Panel</a>. 
-  You can preserve your settings by migrating them to the new Service object 
-  with this form, after which it will be safe to remove this placeholder 
+     >Zope Control Panel</a>.
+  You can preserve your settings by migrating them to the new Service object
+  with this form, after which it will be safe to remove this placeholder
   object.
 </p>
 
@@ -35,14 +35,14 @@ changes python:conf_changes or adv_changes;">
 
 <div tal:condition="changes"
      tal:define="service here/Control_Panel/?cp_id|nothing;
-                 access python:service and 
-                               secManager.checkPermission(perm, service) and 
+                 access python:service and
+                               secManager.checkPermission(perm, service) and
                                secManager.checkPermission(perm, here)">
 <div tal:condition="not:access" class="system-msg">
-You don't have the requisite permissions to migrate the configuration 
+You don't have the requisite permissions to migrate the configuration
 differences from this object to the Wing Debug Service. The permission names
-have changed to, make sure you have the <strong tal:content="perm">permission 
-name</strong> permission; both for this object and for the service. The old 
+have changed to, make sure you have the <strong tal:content="perm">permission
+name</strong> permission; both for this object and for the service. The old
 permission was called <em>Change Wing Debuggers</em>.
 </div>
 
@@ -67,15 +67,15 @@ over the configuration values to the Wing Debug Service.</p>
                 cat python:fi[2];"
     tal:condition="python: cat == 0 and fields[field]">
   <td><input type="checkbox" name="fields:list" id="wing_home"
-             value="wing_home" 
+             value="wing_home"
              tal:attributes="value field; id field;" /></td>
   <td><label for="wing_home"
              tal:attributes="for field"
              tal:content="label">Wing Home</label></td>
-  <td class="row-hilite" 
+  <td class="row-hilite"
       tal:define="value python:here.getLocalValue(field)"
       tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
-  <td class="row-hilite" 
+  <td class="row-hilite"
       tal:define="value python:here.getServiceValue(field)"
       tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
 </tr>
@@ -105,10 +105,10 @@ over the configuration values to the Wing Debug Service.</p>
   <td><label for="wing_home"
              tal:attributes="for field"
              tal:content="label">Wing Home</label></td>
-  <td class="row-hilite" 
+  <td class="row-hilite"
       tal:define="value python:here.getLocalValue(field)"
       tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
-  <td class="row-hilite" 
+  <td class="row-hilite"
       tal:define="value python:here.getServiceValue(field)"
       tal:content="python:here.getDisplayValue(field, value)">wing_home</td>
 </tr>

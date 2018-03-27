@@ -35,7 +35,7 @@ PW_ENC_TYPE_ROTOR modules/WingDBG.config/PW_ENC_TYPE_ROTOR;
 </fieldset>
 
 <fieldset>
-<legend>Wing IDE Debugger Automation</legend>
+<legend>Wing Debugger Automation</legend>
 <table cellspacing="0" cellpadding="2" border="0">
 <tr>
   <td align="left" valign="top" style="width: 10em;">
@@ -138,7 +138,7 @@ PW_ENC_TYPE_ROTOR modules/WingDBG.config/PW_ENC_TYPE_ROTOR;
         as connection password.
     </div>
     <div class="form-help">
-      The port to listen to for attach requests initiated from Wing IDE.
+      The port to listen to for attach requests initiated from Wing.
     </div>
   </td>
 </tr>
@@ -151,7 +151,7 @@ PW_ENC_TYPE_ROTOR modules/WingDBG.config/PW_ENC_TYPE_ROTOR;
            id="attach_port" value="" size="5"
            tal:attributes="value here/attach_port;"/>
     <div class="form-help">
-      The port to listen to for attach requests initiated from Wing IDE.
+      The port to listen to for attach requests initiated from Wing.
     </div>
   </td>
 </tr>

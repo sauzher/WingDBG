@@ -26,8 +26,8 @@
         This is not a valid Wing installation. Please verify the path.
     </div>
     <div class="form-help">
-      The directory where Wing IDE is installed on this machine.  This is
-      used to find Wing IDE's debugger support modules.
+      The directory where Wing is installed on this machine.  This is
+      used to find Wing's debugger support modules.
     </div>
   </td>
 </tr>
@@ -77,7 +77,7 @@
 </fieldset>
 
 <fieldset>
-<legend>Wing IDE connection settings</legend>
+<legend>Wing connection settings</legend>
 <table cellspacing="0" cellpadding="2" border="0">
 <tr>
   <td align="left" valign="top" style="width: 10em;">
@@ -97,8 +97,8 @@
            id="ide_port" value="" size="5"
            tal:attributes="value here/ide_port;" />
     <div class="form-help">
-      The host and port indicate where Wing IDE is listening for the
-      debug connection.  By default Wing IDE listens on port 50005
+      The host and port indicate where Wing is listening for the
+      debug connection.  By default Wing listens on port 50005
       for connections from localhost.  To alter this, use the
       Debugger External/Remote preferences in the IDE and set
       corresponding values here.

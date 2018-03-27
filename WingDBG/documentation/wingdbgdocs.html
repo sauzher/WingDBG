@@ -14,30 +14,33 @@
 <p class="last"><strong>&quot;The best solution for debugging Zope and Plone&quot;</strong>
 <em>-- Joel Burton, Member, Plone Team</em></p>
 </div>
-<img alt="Wing IDE Screen Shot" src="/images/screenshots/wing5-screenshot-linen.png" style="width: 560px; height: 419px;" />
-<p><a class="reference external" href="http://wingware.com/wingide">Wing IDE</a> is an integrated development environment that can be used to
-develop, test, and debug Python code running under Zope2 or Zope3. Wing
+
+<p><a class="reference external" href="https://wingware.com">Wing</a> is a Python IDE that can be used to develop, test, and
+debug Python code written for Zope2 or Zope3. Wing
 provides auto-completion, call tips, and other features that help you write,
 navigate, and understand Zope code. Wing's debugger can be used to debug code
 in the context of the running Zope server, in response to page loads from a
 browser, and can work with Zope's code reloading features to achieve a very
 short edit/debug cycle.</p>
 <p>Wing's code intelligence and debugging support work with Products, External
-Methods, file system-based Scripts and Zope itself. Wing IDE is also useful
-for Zope-based frameworks like <a class="reference external" href="http://www.plone.org/">Plone</a> (see <a class="reference external" href="http://wingware.com/doc/howtos/plone">Plone Quickstart</a>).</p>
-<p>For more information on Wing IDE see the <a class="reference external" href="http://wingware.com/products">product overview</a>. If you do not already have Wing IDE
-installed, <a class="reference external" href="http://wingware.com/wingide/trial">download a free trial now</a>.</p>
-<p>To get started using Wing, refer to the tutorial in the <tt class="docutils literal">Help</tt> menu in Wing
-and/or the <a class="reference external" href="http://wingware.com/doc/howtos/quickstart">Wing IDE Quickstart Guide</a>.</p>
+Methods, file system-based Scripts and Zope itself. Wing is also useful
+for Zope-based frameworks like <a class="reference external" href="http://www.plone.org/">Plone</a> (see <a class="reference external" href="https://wingware.com/doc/howtos/plone">Plone How-To</a>).</p>
+<p>Two versions of Wing are appropriate for use with this document:
+Wing Pro is the full-featured Python IDE for professional programmers, and Wing Personal
+is a free alternative with reduced feature set.</p>
+<p>If you do not already have Wing installed, <a class="reference external" href="https://wingware.com/downloads">download it now</a>.</p>
+<p>This document describes how to configure Wing for Zope. To get started using Wing as your
+Python IDE, please refer to the tutorial in Wing's <tt class="docutils literal">Help</tt> menu or read the <a class="reference external" href="https://wingware.com/doc/howtos/quickstart">Quickstart
+Guide</a>.</p>
 <div class="section" id="before-getting-started">
 <h1>Before Getting Started</h1>
 <p><strong>Note:</strong> This guide is for Zope2 users.  If you are using Zope3, please
-try <a class="reference external" href="http://www.zopatista.com/projects/z3wingdbg">z3wingdbg</a> by Martijn Pieters or refer to <a class="reference external" href="http://wingware.com/doc/debug/debugging-externally-launched-code">Debugging Externally
+try <a class="reference external" href="http://www.zopatista.com/projects/z3wingdbg">z3wingdbg</a> by Martijn Pieters or refer to <a class="reference external" href="https://wingware.com/doc/debug/debugging-externally-launched-code">Debugging Externally
 Launched Code</a> in the users manual to set up Zope3 debugging manually.</p>
-<p><strong>Limitations:</strong> Wing IDE cannot debug DTML, Page Templates, ZCML,
+<p><strong>Limitations:</strong> Wing cannot debug DTML, Page Templates, ZCML,
 or Python code that is not stored on the file system.</p>
 <p><strong>Security Warning:</strong> We advise against using the WingDBG product
-on production web servers.  Any user connected to the Wing IDE debugger
+on production web servers.  Any user connected to the Wing debugger
 will (unavoidably) have extensive access to files and data on the system.</p>
 </div>
 <div class="section" id="upgrading-from-earlier-wing-versions">
@@ -54,13 +57,13 @@ to the new version of Wing.</p>
 </div>
 <div class="section" id="quick-start-on-a-single-host">
 <h1>Quick Start on a Single Host</h1>
-<p>To use Wing IDE with Zope running on the same host as the IDE:</p>
+<p>To use Wing with Zope running on the same host as the IDE:</p>
 <ul class="simple">
 <li><strong>Install Zope</strong> -- You can obtain Zope from <a class="reference external" href="http://www.zope.org">zope.org</a>.  Version
 2.5.1 or newer will work with Wing.</li>
-<li><strong>Install Wing IDE</strong> -- You will need <a class="reference external" href="http://wingware.com/downloads">Wing IDE</a> 2.1 or later.
-See <a class="reference external" href="http://wingware.com/doc/install/installing">Installing</a> for details.</li>
-<li><strong>Configure Wing IDE</strong> -- Start Wing, create or open the project you
+<li><strong>Install Wing</strong> -- You will need <a class="reference external" href="https://wingware.com/downloads">Wing</a> 2.1 or later.
+See <a class="reference external" href="https://wingware.com/doc/install/installing">Installing</a> for details.</li>
+<li><strong>Configure Wing</strong> -- Start Wing, create or open the project you
 wish to use (from the <tt class="docutils literal">Project</tt> menu). Then use the <tt class="docutils literal">Extensions</tt>
 tab in <tt class="docutils literal">Project Properties</tt> to enable <tt class="literal"><span class="pre">Zope2/Plone support</span></tt> and to
 specify the <tt class="literal"><span class="pre">Zope2 Instance Home</span></tt> to use with the project.  Wing
@@ -92,11 +95,11 @@ IDE status area should display &quot;Debugger: Debug process running&quot;.</p>
 when Zope is started from the Advanced configuration tab.</p>
 <p><strong>Problems?</strong>  See the Trouble-Shooting Guide below.</p>
 </div>
-<div class="section" id="test-drive-wing-ide">
-<h1>Test Drive Wing IDE</h1>
+<div class="section" id="test-drive-wing">
+<h1>Test Drive Wing</h1>
 <p>Once you've started the debugger successfully, here are some things
 to try:</p>
-<p><strong>Run to a Breakpoint</strong> -- Open up your Zope code in Wing IDE and set
+<p><strong>Run to a Breakpoint</strong> -- Open up your Zope code in Wing and set
 a breakpoint on a line that will be reached as the result of a browser
 page load. Then load that page in your web browser using the port number
 displayed by the Zope Management Interface after you started the
@@ -126,7 +129,7 @@ to the debug process, if any</li>
 the pause icon in the toolbar or using <tt class="docutils literal">Pause</tt> from the <tt class="docutils literal">Debug</tt> menu.  This is
 a good way to interrupt a lengthy computation to see what's going on.
 When done between page loads, it pauses Zope in its network service code.</p>
-<p><strong>Other Features</strong> -- Notice that Wing IDE's editor contains a source
+<p><strong>Other Features</strong> -- Notice that Wing's editor contains a source
 index and presents you with an auto-completer when you're editing
 source code.  Control-click on a source symbol to jump to its
 point of definition (or use Goto Selected Symbol in the Source menu).
@@ -189,12 +192,12 @@ get loaded through the ZMI at <tt class="docutils literal">/YourPlone/portal_set
 <h1>Setting up Remote Debugging</h1>
 <p>Configuring Wing for remote debugging can be complicated, so we
 recommend using X11 (Linux/Unix) or Remote Desktop (Windows)
-to run Wing IDE on the same machine as Zope but display it remotely.
+to run Wing on the same machine as Zope but display it remotely.
 When this is not possible, you can set up Wing to debug Zope running
 on another machine, as described below:</p>
 <ul class="simple">
 <li><strong>Set up File Sharing</strong> -- You will need some mechanism for
-sharing files between the Zope host and the Wing IDE host. Windows file
+sharing files between the Zope host and the Wing host. Windows file
 sharing, Samba, NFS, and ftp or rsync mirroring are all options.
 For secure file sharing via SSH on Linux, try <a class="reference external" href="http://fuse.sourceforge.net/sshfs.html">sshfs</a>.</li>
 <li><strong>Install Wing on the Server</strong> -- You will also need to install Wing on
@@ -212,12 +215,12 @@ the Zope host to the  <tt class="literal"><span class="pre">Allowed Hosts</span>
 Wing will not accept your debug connections.</li>
 <li><strong>Configure File Mapping</strong> -- Next, set up a mapping between the location
 of the Zope installation on your Zope host and the point where it is
-accessible on you Wing IDE host. For example, if your Zope host is <tt class="docutils literal">192.168.1.1</tt> Zope is installed in
+accessible on your Wing host. For example, if your Zope host is <tt class="docutils literal">192.168.1.1</tt> Zope is installed in
 <tt class="docutils literal">/home/myuser/Zope</tt> on that machine, and <tt class="docutils literal">/home/myuser</tt> is mounted on your
-Wing IDE host as <tt class="docutils literal">e:</tt>, you would add a <tt class="literal"><span class="pre">Location Map</span></tt> preference setting
+Wing host as <tt class="docutils literal">e:</tt>, you would add a <tt class="literal"><span class="pre">Location Map</span></tt> preference setting
 that maps <tt class="docutils literal">192.168.1.1</tt> to a list containing <tt class="docutils literal">/home/myuser/Zope</tt> and <tt class="docutils literal"><span class="pre">e:/Zope</span></tt>.
-For more information on this, see <a class="reference external" href="http://wingware.com/doc/debug/file-location-maps">File Location Maps</a> and <a class="reference external" href="http://wingware.com/doc/debug/file-location-map-example">Location Map Examples</a>
-in the Wing IDE manual.</li>
+For more information on this, see <a class="reference external" href="https://wingware.com/doc/debug/file-location-maps">Manually Configured File Location Maps</a> and <a class="reference external" href="https://wingware.com/doc/debug/file-location-map-example">Location Map Examples</a>
+in the Wing manual.</li>
 <li><strong>Set the Zope Host</strong> -- Go into Project Properties and set the Zope Host
 to match the host name used in configuring the File Location Map in the previous
 step.  This is used to identify which host mapping should be applied to
@@ -233,7 +236,7 @@ IDE is running, not the paths on the Zope host.</li>
 </div>
 <div class="section" id="trouble-shooting-guide">
 <h1>Trouble Shooting Guide</h1>
-<p>You can obtain additional verbose output from Wing IDE and the debug
+<p>You can obtain additional verbose output from Wing and the debug
 process as follows:</p>
 <ul class="simple">
 <li>If Zope or Plone on Windows is yielding a Site Error page with a notFoundError
@@ -241,7 +244,7 @@ when run under Wing's debugger, you may need to go into the Zope Management
 Interface and delete the access rule (... accessRule.py ...).  Now, Zope/Plone runs
 on port 8080, does not alter the configuration of port 80, and will work properly
 with Wing's debug port (50080 by default).  If the URL for your front page
-is <a class="reference external" href="http://localhost:8080/default/front-page">http://localhost:8080/default/front-page</a>, the Wing IDE debug url will always
+is <a class="reference external" href="http://localhost:8080/default/front-page">http://localhost:8080/default/front-page</a>, the Wing debug url will always
 be the same but with the different port: <a class="reference external" href="http://localhost:50080/default/front-page">http://localhost:50080/default/front-page</a>
 (Thanks for Joel Burton for this tip!)</li>
 <li>Go into the Wing Debugging Service in the Zope Management Interface and set <tt class="docutils literal">Log
@@ -250,22 +253,26 @@ logging information to be printed to the console from which Zope was
 started.  Alternatively, set this to the full path of a log file. This file must already
 exist for logging to occur.</li>
 <li>Restart Zope and Wing and try to initiate debug.</li>
-<li>Inspect the contents of the log. If you are running Zope and Wing IDE on two
-separate hosts, you should also inspect the <tt class="docutils literal">ide.log</tt> file on the Wing IDE
-host (located in the <a class="reference external" href="http://wingware.com/doc/install/user-settings-dir">User Settings Directory</a>). It contains additional
-logging information from the Wing IDE process.</li>
+<li>Inspect the contents of the log. If you are running Zope and Wing on two
+separate hosts, you should also inspect the <tt class="docutils literal">ide.log</tt> file on the Wing
+host (located in the <a class="reference external" href="https://wingware.com/doc/install/user-settings-dir">User Settings Directory</a>). It contains additional
+logging information from the Wing process.</li>
 </ul>
 <p>For additional help, send these errors logs to <a class="reference external" href="mailto:support&#64;wingware.com">support at wingware.com</a>.</p>
 </div>
 <div class="section" id="related-documents">
 <h1>Related Documents</h1>
-<p>Wing IDE provides many other options and tools.  For more information:</p>
+<p>Wing provides many other options and tools.  For more information:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://wingware.com/doc/manual">Wing IDE Reference Manual</a>, which describes Wing IDE in detail.</li>
+<li><a class="reference external" href="https://wingware.com/doc/howtos/debugging-web-remote">Remote Web Development</a> describes how to set up
+development to a remote host.</li>
 <li><a class="reference external" href="http://www.zope.org">Zope home page</a>, which contains much additional information for Zope
 programmers.</li>
-<li><a class="reference external" href="http://wingware.com/doc/howtos/quickstart">Quick Start Guide</a> and <a class="reference external" href="http://wingware.com/doc/intro/tutorial">Tutorial</a> which contain additional
-basic information about getting started with Wing IDE.</li>
+<li><a class="reference external" href="https://wingware.com/doc/howtos/quickstart">Quickstart Guide</a> which contains additional basic information about
+getting started with Wing.</li>
+<li><a class="reference external" href="https://wingware.com/doc/intro/tutorial">Tutorial</a> provides a gentler introduction to
+Wing's features.</li>
+<li><a class="reference external" href="https://wingware.com/doc/manual">Wing Reference Manual</a>, which describes Wing in detail.</li>
 </ul>
 </div>
 </div>

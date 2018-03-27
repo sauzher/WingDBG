@@ -1,30 +1,30 @@
 <h1 tal:replace="structure here/manage_page_header" />
 <h2 tal:replace="structure here/manage_tabs" />
 
-<h3>Could not connect to Wing IDE</h3>
+<h3>Could not connect to Wing</h3>
 
 <div>
-  The debugger has started but could not connect back to Wing IDE.  Possible 
+  The debugger has started but could not connect back to Wing.  Possible 
   reasons for failing to connect are:
 
   <div>
   <ul>
 
-    <li><strong>Wing IDE is already debugging or not listening for a debug 
+    <li><strong>Wing is already debugging or not listening for a debug 
         connection on port <span tal:replace="here/ide_port">port</span> of
         <span tal:replace="here/ide_host">host</span>.</strong>
 
-        <p>Make sure Wing IDE is showing "No debug process / listening for 
+        <p>Make sure Wing is showing "No debug process / listening for 
         connections on TCP/IP port <span tal:replace="here/ide_port">port</span>"
         in the status bar bug button's tooltip and you
         have enabled Zope support from the Extensions tab of Project Properties
-        in Wing IDE.</p>
+        in Wing.</p>
     </li>
 
-    <li><strong>Wing IDE is not allowing debug connections from this 
+    <li><strong>Wing is not allowing debug connections from this 
         host.</strong>
 
-        <p>Make sure this host is listed in Wing IDE preference Allowed 
+        <p>Make sure this host is listed in Wing preference Allowed 
         Hosts (in Debugger External/Remote preferences group). If you are
         debugging between hosts, make sure your file location map is
         configured correctly.  See <a href="manage_document"
@@ -47,14 +47,14 @@
         IDE</strong>
         
       <p>When present, the <code>wingdebugpw</code> file must match the file 
-      in the User Settings Directory for the user running Wing IDE.</p>
+      in the User Settings Directory for the user running Wing.</p>
     </li>
 
-    <li><strong>Wing IDE is not version 
+    <li><strong>Wing is not version 
         <span tal:define="version python:here.version.split('b', 1)[0]"
               tal:replace="version">version</span></strong>
 
-        <p>You must run matching versions of Wing IDE and the Zope debugger 
+        <p>You must run matching versions of Wing and the Zope debugger 
         module.</p>
     </li>
         

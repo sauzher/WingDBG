@@ -60,7 +60,7 @@ def findInternalWinghome(winghome):
     return None
 
 def getWingIDEDir(netserver=None):
-    """Get the Wing IDE profile directory for the current user.
+    """Get the Wing profile directory for the current user.
     
     If the debugger core has not been loaded yet, this may not be precisely
     correct because of the absence of a GetUserName function on win32. 

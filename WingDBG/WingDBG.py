@@ -26,7 +26,7 @@
 ##############################################################################
 __doc__ = """Wing Debugger Service Module"""
 
-__version__ = '6.0.2'
+__version__ = '6.0.9'
 
 
 import os
@@ -150,7 +150,7 @@ class WingDebugService(SimpleItem, PropertyManager):
     connect_at_start = 1
     auto_reconnect_ide = 0
     
-    allow_attach = 1
+    allow_attach = 0
     pw_mode = PW_MODE_CUSTOM_DIR
     pw_dir = ''
     custom_encrypt_type = PW_ENC_TYPE_NONE
@@ -165,11 +165,11 @@ class WingDebugService(SimpleItem, PropertyManager):
 
     def __init__(self): 
         if sys.platform == 'win32':
-            self.wing_home = r'c:\Program Files\Wing IDE 6.0'
+            self.wing_home = r'c:\Program Files (x86)\Wing IDE 6'
         elif sys.platform.startswith('darwin'):
             self.wing_home = '/Applications/WingIDE.app'
         else:
-            self.wing_home = '/usr/lib/wingide6.0'
+            self.wing_home = '/usr/lib/wingide6'
         
         winghome_file = os.path.join(PRODUCT_DIR, '.winghome')
         if os.path.isfile(winghome_file):
@@ -431,9 +431,6 @@ class WingDebugService(SimpleItem, PropertyManager):
         if self.pw_mode == PW_MODE_CUSTOM_PW:
             # Custom mode
             debugger.SetSecurityInfo(self.custom_connect_pw)
-        elif not self.allow_attach:
-            # Generate a password for Wing Debugger Service initiated conns.
-            debugger.SetSecurityInfo(generatePRandomPW())
             
         # Raise exception if security info is invalid
         if self.allow_attach and not debugger.IsSecurityInfoValid():
