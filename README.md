@@ -4,8 +4,8 @@ Eggification of Wingware WingDBG a Zope product that allows Wing to debug Python
 # Fast start-up
 For all detailed documentation, please follow: http://www.wingware.com/doc/howtos/zope
 
-Update you buildout configuration
- 1) Adding WingDBG to your eggs
+Update your buildout configuration:
+ 1) adding WingDBG to your eggs
  ```
  eggs +=
    WingDBG
@@ -23,7 +23,7 @@ Then run buildout (usually `bin/buildout -Nv`) and start Zope (i.e. `bin/instanc
 You should see something like `2018-03-27 09:26:02 INFO WingDBG Installed Wing Debug Service in Control Panel` 
 just before classic `Zope Ready to handle requests`
 
-Now go to the Control_Panel in ZMI and follow the new link "Wing Debug Service"
+Now go to the Control_Panel in ZMI and follow the new link "Wing Debug Service". 
 Here you can start the servive, it will connect automatically to your wing editor (for remote debugging see official documentation)
 
 If something fails check the `wing home dir` in the `configure` tab. It should be something like
